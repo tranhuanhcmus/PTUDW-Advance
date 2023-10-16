@@ -2,7 +2,6 @@ package com.example.accessData.actor;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "actor")

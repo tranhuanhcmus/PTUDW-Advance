@@ -33,8 +33,8 @@ public class ActorService {
     }
 
     public ResponseEntity<String> deleteActorById(Short id) {
-        Optional<Actor> actor = actorRepository.findById(id);
-        if (!actor.isPresent()) {
+        Optional<Actor> actorOptional = actorRepository.findById(id);
+        if (actorOptional.isEmpty()) {
             return new ResponseEntity<>("Actor do not exists", HttpStatus.NOT_FOUND);
         } else {
             actorRepository.deleteById(id);
@@ -45,7 +45,7 @@ public class ActorService {
     public ResponseEntity<String> updateActor(Short id, ActorDTO updateActor) {
         Optional<Actor> actorOptional = actorRepository.findById(id);
 
-        if (!actorOptional.isPresent()) {
+        if (actorOptional.isEmpty()) {
             return new ResponseEntity<>("Actor do not exists", HttpStatus.NOT_FOUND);
         }
 
