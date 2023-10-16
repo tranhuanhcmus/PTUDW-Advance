@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
@@ -15,25 +16,24 @@ public class ActorService {
         this.actorRepository = actorRepository;
     }
 
-    public ResponseEntity<String> addNewActor(String firstName, String lastName) {
+    public ResponseEntity<String> addNewActor(Actor actor) {
+
+        String firstName=actor.getFirstName();
+        String lastName=actor.getLastName();
         // Validate input
         if (firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()) {
-            return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST) ;
+            return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
         }
 
         // Check if actor with the same details exists
-        Optional<Actor> actor = actorRepository.findByFirstNameAndLastName(firstName, lastName);
-        if (actor.isPresent()) {
+        Optional<Actor> optionalActor = actorRepository.findByFirstNameAndLastName(firstName, lastName);
+        if (optionalActor.isPresent()) {
             return new ResponseEntity<>("Actor already exists", HttpStatus.CONFLICT);
         }
 
-        // Create a new actor and save it
-        Actor newActor = new Actor();
-        newActor.setFirstName(firstName);
-        newActor.setLastName(lastName);
-        actorRepository.save(newActor);
+        actorRepository.save(actor);
 
-        return new ResponseEntity<>("Saved Success", HttpStatus.OK);
+        return new ResponseEntity<>("Saved Success", HttpStatus.CREATED);
     }
 
 
@@ -55,15 +55,20 @@ public class ActorService {
         }
     }
 
-    public ResponseEntity<String> updateActor(Short id, String firstName,String lastName) {
+    public ResponseEntity<String> updateActor(Short id, Actor updateActor) {
         Optional<Actor> actorOptional = actorRepository.findById(id);
+
+        String firstName=updateActor.getFirstName();
+        String lastName=updateActor.getLastName();
+
         if (!actorOptional.isPresent()) {
             return new ResponseEntity<>("Actor do not exists", HttpStatus.NOT_FOUND);
         }
         if (firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()) {
-            return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST) ;
+            return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
         }
-        Actor actor=actorOptional.get();
+
+        Actor actor = actorOptional.get();
         actor.setFirstName(firstName);
         actor.setLastName(lastName);
 
