@@ -1,5 +1,6 @@
 package com.example.accessData.actor;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,7 @@ public class ActorController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<String> addNewActor(@RequestBody Actor form) {
-
+    public ResponseEntity<String> addNewActor(@RequestBody @Valid ActorDTO form) {
         return actorService.addNewActor(form);
     }
 
@@ -30,16 +30,16 @@ public class ActorController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Optional<Actor>> getActor(@PathVariable Short id) {
-        return actorService.getActor(id);
+        return actorService.getActorById(id);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deleteActor(@PathVariable Short id) {
-        return actorService.deleteActor(id);
+        return actorService.deleteActorById(id);
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<String> updateActor(@PathVariable Short id, @RequestBody Actor form) {
+    public ResponseEntity<String> updateActor(@PathVariable Short id, @RequestBody @Valid ActorDTO form) {
 
         return actorService.updateActor(id, form);
     }

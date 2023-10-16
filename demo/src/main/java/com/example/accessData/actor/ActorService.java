@@ -16,22 +16,9 @@ public class ActorService {
         this.actorRepository = actorRepository;
     }
 
-    public ResponseEntity<String> addNewActor(Actor actor) {
+    public ResponseEntity<String> addNewActor(ActorDTO actorDTO) {
 
-        String firstName=actor.getFirstName();
-        String lastName=actor.getLastName();
-        // Validate input
-        if (firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()) {
-            return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
-        }
-
-        // Check if actor with the same details exists
-        Optional<Actor> optionalActor = actorRepository.findByFirstNameAndLastName(firstName, lastName);
-        if (optionalActor.isPresent()) {
-            return new ResponseEntity<>("Actor already exists", HttpStatus.CONFLICT);
-        }
-
-        actorRepository.save(actor);
+        actorRepository.save(new Actor(actorDTO));
 
         return new ResponseEntity<>("Saved Success", HttpStatus.CREATED);
     }
@@ -41,11 +28,11 @@ public class ActorService {
         return new ResponseEntity<>(actorRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<Optional<Actor>> getActor(Short id) {
+    public ResponseEntity<Optional<Actor>> getActorById(Short id) {
         return new ResponseEntity<>(actorRepository.findById(id), HttpStatus.OK);
     }
 
-    public ResponseEntity<String> deleteActor(Short id) {
+    public ResponseEntity<String> deleteActorById(Short id) {
         Optional<Actor> actor = actorRepository.findById(id);
         if (!actor.isPresent()) {
             return new ResponseEntity<>("Actor do not exists", HttpStatus.NOT_FOUND);
@@ -55,18 +42,15 @@ public class ActorService {
         }
     }
 
-    public ResponseEntity<String> updateActor(Short id, Actor updateActor) {
+    public ResponseEntity<String> updateActor(Short id, ActorDTO updateActor) {
         Optional<Actor> actorOptional = actorRepository.findById(id);
-
-        String firstName=updateActor.getFirstName();
-        String lastName=updateActor.getLastName();
 
         if (!actorOptional.isPresent()) {
             return new ResponseEntity<>("Actor do not exists", HttpStatus.NOT_FOUND);
         }
-        if (firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()) {
-            return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
-        }
+
+        String firstName=updateActor.getFirstName();
+        String lastName=updateActor.getLastName();
 
         Actor actor = actorOptional.get();
         actor.setFirstName(firstName);

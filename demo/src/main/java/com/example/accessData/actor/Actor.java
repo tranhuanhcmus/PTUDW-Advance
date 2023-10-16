@@ -1,6 +1,7 @@
 package com.example.accessData.actor;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -13,10 +14,21 @@ public class Actor {
     private Short id;
 
     @Column(name = "first_name")
+    @NotEmpty
     private String firstName;
 
     @Column(name = "last_name")
+    @NotEmpty
     private String lastName;
+
+    public Actor(ActorDTO actorDTO){
+        this.firstName=actorDTO.getFirstName();
+        this.lastName=actorDTO.getLastName();
+    }
+
+    public Actor() {
+
+    }
 
     public Short getId() {
         return id;
