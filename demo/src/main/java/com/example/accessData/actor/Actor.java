@@ -1,7 +1,11 @@
 package com.example.accessData.actor;
 
+import com.example.accessData.filmActor.FilmActor;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "actor")
@@ -19,6 +23,9 @@ public class Actor {
     @Column(name = "last_name")
     @NotEmpty
     private String lastName;
+
+    @OneToMany(mappedBy = "actor")
+    private Set<FilmActor> filmActors = new LinkedHashSet<>();
 
     public Actor(ActorDTO actorDTO){
         this.firstName=actorDTO.getFirstName();
@@ -51,5 +58,13 @@ public class Actor {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<FilmActor> getFilmActors() {
+        return filmActors;
+    }
+
+    public void setFilmActors(Set<FilmActor> filmActors) {
+        this.filmActors = filmActors;
     }
 }

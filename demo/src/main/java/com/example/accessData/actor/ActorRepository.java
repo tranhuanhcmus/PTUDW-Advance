@@ -1,9 +1,9 @@
 package com.example.accessData.actor;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
 
-public interface ActorRepository extends CrudRepository<Actor, Short> {
-    public Optional<Actor> findByFirstNameAndLastName(String firstName, String lastName);
+public interface ActorRepository extends JpaRepository<Actor, Short>, JpaSpecificationExecutor<Actor> {
 }
