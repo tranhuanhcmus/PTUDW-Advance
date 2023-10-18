@@ -57,8 +57,6 @@ public class Film {
     @NotNull(message = "Language is not null")
     private Language language;
 
-
-
     public Film(){
 
     }
@@ -73,11 +71,24 @@ public class Film {
     public void setLanguage(Language language) {
         this.language = language;
     }
-    public void setFromFilmDTO(FilmDTO filmDTO){
+    public Film(FilmDTO filmDTO){
+        this.id = filmDTO.getId();
         this.title = filmDTO.getTitle();
         this.description = filmDTO.getDescription();
         this.releaseYear = filmDTO.getReleaseYear();
-        this.rentalDuration = filmDTO.getRentalDuration();
+        this.rentalDuration = filmDTO.getRentalDuration().byteValue();
+        this.rentalRate = filmDTO.getRentalRate();
+        this.length = filmDTO.getLength();
+        this.replacementCost = filmDTO.getReplacementCost();
+        this.rating = filmDTO.getRating();
+        this.specialFeatures = filmDTO.getSpecialFeatures();
+    }
+
+    public void setUpdateData(UpdateFilmDTO filmDTO) {
+        this.title = filmDTO.getTitle();
+        this.description = filmDTO.getDescription();
+        this.releaseYear = filmDTO.getReleaseYear();
+        this.rentalDuration = filmDTO.getRentalDuration().byteValue();
         this.rentalRate = filmDTO.getRentalRate();
         this.length = filmDTO.getLength();
         this.replacementCost = filmDTO.getReplacementCost();

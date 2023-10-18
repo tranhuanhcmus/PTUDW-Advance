@@ -16,7 +16,7 @@ public class LanguageController {
         this.languageService = languageService;
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "")
     public ResponseEntity<List<Language>> getAll(){
         return languageService.getAll();
     }
@@ -33,7 +33,7 @@ public class LanguageController {
         return languageService.updateById(id,language);
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "")
     public ResponseEntity<String> createLanguage(@RequestBody @Valid Language language){
         return languageService.createLanguage(language);
     }

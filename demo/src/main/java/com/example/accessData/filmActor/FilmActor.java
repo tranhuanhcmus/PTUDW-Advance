@@ -3,6 +3,7 @@ package com.example.accessData.filmActor;
 import com.example.accessData.actor.Actor;
 import com.example.accessData.film.Film;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,7 @@ import jakarta.persistence.*;
 public class FilmActor {
     @JsonIgnore
     @EmbeddedId
+    @Schema(example = "1", description = "")
     private FilmActorId id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

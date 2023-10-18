@@ -65,7 +65,7 @@ public class FilmService {
 
     }
 
-    public ResponseEntity<String> updateFilmById(Short id, Film film) {
+    public ResponseEntity<String> updateFilmById(Short id, UpdateFilmDTO filmDto) {
 
         Optional<Film> filmOptional = filmRepository.findById(id);
 
@@ -73,8 +73,7 @@ public class FilmService {
             return new ResponseEntity<>("Film is not exist", HttpStatus.NOT_FOUND);
         }
 
-        Byte languageId = film.getLanguage().getId();
-
+        Byte languageId = filmDto.getLanguageId().byteValue();
         Optional<Language> languageOptional = languageRepository.findById(languageId);
 
         if (languageOptional.isEmpty()) {
@@ -82,6 +81,7 @@ public class FilmService {
         }
 
         Film updateFilm=filmOptional.get();
+        updateFilm.setUpdateData(filmDto);
         updateFilm.setLanguage(languageOptional.get());
 
         filmRepository.save(updateFilm);
