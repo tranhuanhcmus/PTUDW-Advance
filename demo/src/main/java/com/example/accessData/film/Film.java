@@ -7,12 +7,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "film")
 public class Film {
+
+    static final List<String> ERatings = Arrays.asList("NC-17", "R", "G", "PG-13", "PG");
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id", nullable = false)
@@ -52,14 +54,13 @@ public class Film {
     @Lob
     @Column(name = "special_features")
     private String specialFeatures;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false,targetEntity = Language.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Language.class)
     @JoinColumn(name = "language_id", nullable = false)
     @NotNull(message = "Language is not null")
     private Language language;
 
 
-
-    public Film(){
+    public Film() {
 
     }
 
@@ -73,7 +74,8 @@ public class Film {
     public void setLanguage(Language language) {
         this.language = language;
     }
-    public void setFromFilmDTO(FilmDTO filmDTO){
+
+    public void setFromFilmDTO(FilmDTO filmDTO) {
         this.title = filmDTO.getTitle();
         this.description = filmDTO.getDescription();
         this.releaseYear = filmDTO.getReleaseYear();
@@ -173,7 +175,6 @@ public class Film {
     public void setFilmActors(Set<FilmActor> filmActors) {
         this.filmActors = filmActors;
     }
-
 
 
 }

@@ -28,6 +28,10 @@ public class FilmService {
     }
 
     public ResponseEntity<String> createFilm(Film film) {
+        String rating=film.getRating();
+        if(!Film.ERatings.contains(rating)){
+            return new ResponseEntity<>("Rating value is invalid", HttpStatus.BAD_REQUEST);
+        }
 
         Optional<Language> languageOptional = languageRepository.findById(film.getLanguage().getId());
 
