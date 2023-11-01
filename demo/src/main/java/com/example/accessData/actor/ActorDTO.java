@@ -21,12 +21,18 @@ public class ActorDTO implements Serializable {
     private final String lastName;
     private final Set<FilmActor> filmActors;
 
-
     public ActorDTO(Actor actor) {
         this.id = actor.getId();
         this.firstName = actor.getFirstName();
         this.lastName = actor.getLastName();
         this.filmActors = actor.getFilmActors();
+    }
+
+    public ActorDTO() {
+        this.id = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.filmActors = null;
     }
 
     public Short getId() {
@@ -43,8 +49,10 @@ public class ActorDTO implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ActorDTO entity = (ActorDTO) o;
         return Objects.equals(this.firstName, entity.firstName) &&
                 Objects.equals(this.lastName, entity.lastName);
