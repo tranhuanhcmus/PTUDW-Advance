@@ -1,36 +1,57 @@
 package com.example.accessData.auth;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.security.config.Customizer.withDefaults;
 
-@EnableWebSecurity
+import org.springframework.context.annotation.*;
+import org.springframework.security.authentication.dao.*;
+import org.springframework.security.config.annotation.authentication.builders.*;
+import org.springframework.security.config.annotation.web.builders.*;
+import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.example.accessData.User.UserDetailsServiceImpl;
+ 
 @Configuration
-public class WebSecurityConfig {
-
+@EnableWebSecurity
+public class WebSecurityConfig  {
+ 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                //tắt chế độ CSRF
-                .csrf(csrf -> csrf.disable())
-                //Define điều kiện authen
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                );
-
-        return httpSecurity.build();
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
     }
-
+     
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        return encoder;
+    public BCryptPasswordEncoder passwordEncoder() {
+    	
+        return new BCryptPasswordEncoder();
     }
-
+     
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+       
+        authProvider.setPasswordEncoder(passwordEncoder());
+        
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String passwordString ="1234";
+        
+         
+        System.out.println(encoder.encode(passwordString));
+        return authProvider;
+    }
+ 
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+    }
+ 
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin().permitAll()
+            .and()
+            .logout().permitAll();
+    }
 }
