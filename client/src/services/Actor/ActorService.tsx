@@ -1,4 +1,4 @@
-import { ActorFieldForm } from "../../Components/Tables/Actor/ActorForm";
+import { ActorFieldForm } from "../../Components/Tables/Actor/ActorForm"
 import { api } from "../APIS"
 import { API } from "../APIS/constants"
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui/x-data-grid';
 import { ActorService } from '../../../services/Actor/ActorService';
 import { Button, Modal } from '@mui/material';
-import ActorForm, { ActorFieldForm } from './ActorForm';
+import ActorForm  from '../../Auth/AuthForm';
+import { ActorFieldForm } from './ActorForm';
 
 
 const columns: GridColDef[] = [

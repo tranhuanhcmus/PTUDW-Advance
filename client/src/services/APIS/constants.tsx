@@ -1,6 +1,7 @@
 export const API={
 	ACTOR:{
-		ALL:"/actor/all",
-		ADD:"/actor/add",
-	}
+		ALL:"/actors/",
+		ADD:"/actors/",
+	},
+	AUTH:"/auth/"
 }

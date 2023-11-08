@@ -32,9 +32,8 @@ public class Film {
     @Column(name = "release_year")
     private Integer releaseYear;
 
-    @NotNull(message = "Duration is not null")
     @Column(name = "rental_duration", nullable = false)
-    private Byte rentalDuration;
+    private Short rentalDuration;
 
     @NotNull(message = "rentalRate is not null")
     @Column(name = "rental_rate", nullable = false, precision = 4, scale = 2)
@@ -119,11 +118,11 @@ public class Film {
         this.releaseYear = releaseYear;
     }
 
-    public Byte getRentalDuration() {
+    public Short getRentalDuration() {
         return rentalDuration;
     }
 
-    public void setRentalDuration(Byte rentalDuration) {
+    public void setRentalDuration(Short rentalDuration) {
         this.rentalDuration = rentalDuration;
     }
 

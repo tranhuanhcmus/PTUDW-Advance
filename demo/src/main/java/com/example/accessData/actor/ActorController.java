@@ -25,13 +25,13 @@ public class ActorController {
     }
 
     @Operation(summary = "Add new actor", description = "Add new actor" )
-    @PostMapping(path = "")
+    @PostMapping(path = "/")
     public ResponseEntity<String> addNewActor(@RequestBody @Valid ActorDTO actorDTO) {
         return actorService.createActor(actorDTO);
     }
 
     @Operation(summary = "Get all actors", description = "Get all actors in database" )
-    @GetMapping(path = "")
+    @GetMapping(path = "/")
     public ResponseEntity<List<ActorDTO>> getAllActors() {
         return actorService.getAll();
     }

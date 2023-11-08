@@ -1,16 +1,17 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import './styles.scss';
 import { useState } from 'react';
-import { ActorService } from '../../../services/Actor/ActorService';
+import { AuthService } from '../../services/Auth/AuthService';
+import { AxiosError } from 'axios';
 
-export type ActorFieldForm = {
-	firstName: string;
-	lastName: string;
+export type AuthFieldForm = {
+	username: string;
+	password: string;
 };
 
-const initialFields: ActorFieldForm = {
-	firstName: '',
-	lastName: '',
+const initialFields: AuthFieldForm = {
+	username: '',
+	password: '',
 };
 
 const AuthForm = () => {
@@ -22,11 +23,16 @@ const AuthForm = () => {
 
 		try {
 			setStatus("Pending")
-			const res = await ActorService.addActor(fields);
-			setStatus(res)
-		} catch (err) {
-			setStatus(err as string)
-		}
+			const res:AuthFieldForm = await AuthService.login(fields);
+			setStatus("Hello "+res.username)
+			
+		} catch (error) {
+			if (error instanceof AxiosError) {
+				console.log(error);
+				
+				setStatus(error.code as string)
+			}
+		  }
 		finally{
 			setFields(initialFields)
 		}
@@ -45,25 +51,25 @@ const AuthForm = () => {
 			<div className="container">
 				<TextField
 					required
-					name="firstName"
-					label="firstName"
+					name="username"
+					label="username"
 					fullWidth
-					value={fields.firstName}
+					value={fields.username}
 					onChange={handleFieldChange}
 				/>
 				<TextField
 					required
-					name="lastName"
-					label="lastName"
+					name="password"
+					label="Password"
 					fullWidth
-					value={fields.lastName}
+					value={fields.password}
 					onChange={handleFieldChange}
 				/>
 				<Typography>
 					{status}
 				</Typography>
 				<Button type="submit" variant="contained">
-					ADD
+					LOGIN
 				</Button>
 			</div>
 		</Box>
