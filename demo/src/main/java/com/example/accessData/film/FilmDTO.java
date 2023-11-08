@@ -3,6 +3,7 @@ package com.example.accessData.film;
 import com.example.accessData.filmActor.FilmActor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
@@ -15,20 +16,38 @@ import java.util.stream.Collectors;
  * DTO for {@link Film}
  */
 public class FilmDTO implements Serializable {
+    @Schema(example = "2")
     private final Short id;
+
+    @Schema(example = "StarWar")
     @Size(message = "Max Size of Title is 255", max = 255)
     private final String title;
+
+    @Schema(example = "Description of movie")
     private final String description;
+
+    @Schema(example = "2017")
     private final Integer releaseYear;
 
-    private final Byte rentalDuration;
+    @Schema(example = "65")
+    private final Short rentalDuration;
 
+    @Schema(example = "6.5")
     private final BigDecimal rentalRate;
+
+    @Schema(example = "114")
     private final Short length;
 
+    @Schema(example = "6.99")
     private final BigDecimal replacementCost;
+
+    @Schema(example = "P")
     private final String rating;
+
+    @Schema(example = "Trailers,Deleted Scenes")
     private final String specialFeatures;
+
+    @Schema(example = "Vietnamese")
     private final String language;
     @JsonIgnore
     private final Byte languageId;
@@ -41,7 +60,7 @@ public class FilmDTO implements Serializable {
         this.title = film.getTitle();
         this.description = film.getDescription();
         this.releaseYear = film.getReleaseYear();
-        this.rentalDuration = film.getRentalDuration();
+        this.rentalDuration = film.getRentalDuration().shortValue();
         this.rentalRate = film.getRentalRate();
         this.length = film.getLength();
         this.replacementCost = film.getReplacementCost();
@@ -68,7 +87,7 @@ public class FilmDTO implements Serializable {
         return releaseYear;
     }
 
-    public Byte getRentalDuration() {
+    public Short getRentalDuration() {
         return rentalDuration;
     }
 

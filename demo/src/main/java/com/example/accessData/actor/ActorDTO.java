@@ -2,6 +2,7 @@ package com.example.accessData.actor;
 
 import com.example.accessData.filmActor.FilmActor;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
@@ -14,9 +15,14 @@ import java.util.stream.Collectors;
  */
 public class ActorDTO implements Serializable {
 
+    @Schema(example = "21", description = "")
     private final Short id;
+
+    @Schema(example = "Nguyen", description = "")
     @NotEmpty(message = "Thiếu firstName")
     private final String firstName;
+
+    @Schema(example = "Tan", description = "")
     @NotEmpty(message = "Thiếu lastName")
     private final String lastName;
     private final Set<FilmActor> filmActors;

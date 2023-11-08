@@ -54,13 +54,12 @@ public class Film {
     @Lob
     @Column(name = "special_features")
     private String specialFeatures;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Language.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,targetEntity = Language.class)
     @JoinColumn(name = "language_id", nullable = false)
     @NotNull(message = "Language is not null")
     private Language language;
 
-
-    public Film() {
+    public Film(){
 
     }
 
@@ -175,6 +174,7 @@ public class Film {
     public void setFilmActors(Set<FilmActor> filmActors) {
         this.filmActors = filmActors;
     }
+
 
 
 }
