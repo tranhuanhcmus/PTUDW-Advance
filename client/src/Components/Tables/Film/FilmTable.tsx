@@ -1,32 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui/x-data-grid';
-import { ActorService } from '../../../services/Actor/ActorService';
+import { FilmService } from '../../../services/Films/FilmService';
 
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: 'ID', width: 200 },
-  { field: "firstName", headerName: 'First name', width: 200 },
-  { field: "lastName", headerName: 'Last name', width: 200 },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 300,
-    valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
+  { field: "id", headerName: 'ID' },
+  { field: "title", headerName: 'Title', width: 200 },
+  { field: "description", headerName: 'Description', width: 300 },
+  { field: "releaseYear", headerName: 'Year'},
+  { field: "rentalDuration", headerName: 'Duration' },
+  { field: "rentalRate", headerName: 'Rate' },
+  { field: "replacementCost", headerName: 'Cost'},
+  { field: "rating", headerName: 'Rating' },
+  { field: "specialFeatures", headerName: 'Features', width: 300 },
+  { field: "language", headerName: 'Language'},
 ];
 
-const ActorTable: React.FC = () => {
+const FilmTable: React.FC = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const actors = await ActorService.getAll();
+        const films = await FilmService.getAll();
 
-        setData(actors);
+        setData(films);
 
       } catch (err) {
         console.error(err);
@@ -63,4 +61,4 @@ const ActorTable: React.FC = () => {
   );
 };
 
-export default ActorTable;
+export default FilmTable;

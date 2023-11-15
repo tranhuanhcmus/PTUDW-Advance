@@ -1,7 +1,5 @@
 export const API={
-	ACTOR:{
-		ALL:"/actors/",
-		ADD:"/actors/",
-	},
-	AUTH:"/auth/"
+	ACTORS:"/actors",
+	FILMS:"films",
+	AUTH:"/auth"
 }

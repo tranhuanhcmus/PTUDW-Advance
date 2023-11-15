@@ -3,40 +3,25 @@ import './styles.scss';
 import { useState } from 'react';
 import { AuthService } from '../../services/Auth/AuthService';
 import { AxiosError } from 'axios';
+import { useSelector } from 'react-redux';
+import { AppState } from './../../redux/store';
 
 export type AuthFieldForm = {
-	username: string;
+	userName: string;
 	password: string;
 };
 
 const initialFields: AuthFieldForm = {
-	username: '',
+	userName: '',
 	password: '',
 };
 
 const AuthForm = () => {
 	const [fields, setFields] = useState(initialFields);
-	const [status,setStatus]=useState<string>("")
+	const [status, setStatus] = useState<string>("")
 
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault(); // Prevent default form submission behavior
+	const user = useSelector((state: AppState) => state.user)
 
-		try {
-			setStatus("Pending")
-			const res:AuthFieldForm = await AuthService.login(fields);
-			setStatus("Hello "+res.username)
-			
-		} catch (error) {
-			if (error instanceof AxiosError) {
-				console.log(error);
-				
-				setStatus(error.code as string)
-			}
-		  }
-		finally{
-			setFields(initialFields)
-		}
-	};
 
 	const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -46,15 +31,24 @@ const AuthForm = () => {
 		});
 	};
 
+	const handleLogin = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		console.log(fields);
+		const res = await AuthService.login(fields);
+		console.log(res);
+
+	}
+
 	return (
-		<Box component="form" id="AuthForm" onSubmit={handleSubmit}>
+		<Box component="form" id="AuthForm" onSubmit={handleLogin}>
 			<div className="container">
 				<TextField
 					required
-					name="username"
-					label="username"
+					name="userName"
+					label="UserName"
 					fullWidth
-					value={fields.username}
+					value={fields.userName}
 					onChange={handleFieldChange}
 				/>
 				<TextField
