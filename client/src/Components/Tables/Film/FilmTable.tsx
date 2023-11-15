@@ -1,31 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid, GridColDef, GridRowParams, GridValueGetterParams } from '@mui/x-data-grid';
-import { FilmService } from '../../../services/Films/FilmService';
-
-
+import React, { useState, useEffect } from "react";
+import {
+  DataGrid,
+  GridColDef,
+  GridRowParams,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
+import { FilmService } from "../../../services/Films/FilmService";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../redux/store";
 const columns: GridColDef[] = [
-  { field: "id", headerName: 'ID' },
-  { field: "title", headerName: 'Title', width: 200 },
-  { field: "description", headerName: 'Description', width: 300 },
-  { field: "releaseYear", headerName: 'Year'},
-  { field: "rentalDuration", headerName: 'Duration' },
-  { field: "rentalRate", headerName: 'Rate' },
-  { field: "replacementCost", headerName: 'Cost'},
-  { field: "rating", headerName: 'Rating' },
-  { field: "specialFeatures", headerName: 'Features', width: 300 },
-  { field: "language", headerName: 'Language'},
+  { field: "id", headerName: "ID" },
+  { field: "title", headerName: "Title", width: 200 },
+  { field: "description", headerName: "Description", width: 300 },
+  { field: "releaseYear", headerName: "Year" },
+  { field: "rentalDuration", headerName: "Duration" },
+  { field: "rentalRate", headerName: "Rate" },
+  { field: "replacementCost", headerName: "Cost" },
+  { field: "rating", headerName: "Rating" },
+  { field: "specialFeatures", headerName: "Features", width: 300 },
+  { field: "language", headerName: "Language" },
 ];
 
 const FilmTable: React.FC = () => {
   const [data, setData] = useState([]);
+  const user = useSelector((state: AppState) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const films = await FilmService.getAll();
+        const films = await FilmService.getAll(user?.accessToken || "");
 
         setData(films);
-
       } catch (err) {
         console.error(err);
       }
@@ -34,10 +39,8 @@ const FilmTable: React.FC = () => {
     fetchData();
   }, []);
 
-
-
   return (
-    <div style={{ height: 600, width: '100%' }}>
+    <div style={{ height: 600, width: "100%" }}>
       {data.length > 0 ? (
         <>
           <DataGrid
@@ -52,12 +55,10 @@ const FilmTable: React.FC = () => {
             checkboxSelection
           />
         </>
-
       ) : (
         <h1>Fetching data ...</h1>
       )}
     </div>
-
   );
 };
 

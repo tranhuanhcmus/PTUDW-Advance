@@ -51,6 +51,13 @@ public class AuthenticationService {
 
 
     public static Authentication getAuthentication(HttpServletRequest request) {
+    	
+    	
+    	if (request.getRequestURI().toString().equals("/api/v1/auth")){
+            
+            return new ApiKeyAuthentication("accessToken", AuthorityUtils.NO_AUTHORITIES);
+        }
+    	
         if (request.getHeader("Authorization") != null) {
             String accessToken = request.getHeader("Authorization");
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(accessToken).getBody();
