@@ -52,6 +52,16 @@ const ChatRoom = () => {
                 publicChats.push(payloadData);
                 setPublicChats([...publicChats]);
                 break;
+            case "LEAVE":
+                publicChats.push({
+                    sender: payloadData.sender,
+                    content: payloadData.sender + " left!",
+                    type:"LEAVE"
+                });
+                setPublicChats([...publicChats]);
+                break;
+            default:
+                break;
         }
     }
     const onError = (err) => {
