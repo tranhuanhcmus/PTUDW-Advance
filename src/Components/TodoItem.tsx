@@ -1,28 +1,38 @@
 
-import { useState } from 'react';
-export type TodoItemProps = {
-	title: string,
-	content: string,
-	check: boolean
+import { useState, useEffect } from 'react';
+import { Task } from './TodoList';
+type TodoItemProps = {
+	data: Task;
+	key:number;
+	handleDelete: () => void;
+	handleEdit:() => void;
+	handleCheck:() => void;
 }
 
-const TodoItem = ({ title, content, check }: TodoItemProps) => {
-	const [isCheck, setIsCheck] = useState(check)
+const TodoItem = ({ data,key, handleDelete,handleEdit,handleCheck }: TodoItemProps) => {
+	const [taskData, setTaskData] = useState<Task>()
 
-	const handleInput = () => {
-		setIsCheck(prev => !prev)
-	}
+	useEffect(() => {
+		setTaskData(data)
+	}, [data])
+
+	
 	return (
-		<div className={`${isCheck ? 'bg-green-500	 ' : 'bg-red-500	 '} w-full flex p-2 items-center gap-4`}>
-			<input type="checkbox" name="check" checked={isCheck} onClick={handleInput} />
-			<div className="flex-1 justify-start text-start">
-				<h1 className={isCheck ? 'line-through' : ''}>{title}</h1>
-				<p className={` italic`}>{content}</p>
-			</div>
-			<div>
-				<button>Delete</button>
-			</div>
-		</div>
+		<>
+			{
+				taskData && <div className={`${taskData.check ? 'bg-green-500	 ' : 'bg-red-500	 '} w-full flex p-2 items-center gap-4`}>
+					<input type="checkbox" name="check" checked={taskData.check} onChange={handleCheck} />
+					<div className="flex-1 justify-start text-start">
+						<h1 className={taskData.check ? 'line-through' : ''}>{taskData.title}</h1>
+						<p className={` italic`}>{taskData.content}</p>
+					</div>
+					<div>
+						<button onClick={handleDelete}>Delete</button>
+						<button onClick={handleEdit}>Edit</button>
+					</div>
+				</div>
+			}
+		</>
 	)
 }
 
