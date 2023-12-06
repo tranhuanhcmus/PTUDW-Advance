@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Task } from "./TodoList";
+import { Task } from "../models";
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask, editTask } from "../redux/taskSlice";
 

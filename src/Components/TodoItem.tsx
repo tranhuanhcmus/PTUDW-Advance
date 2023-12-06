@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Task } from './TodoList';
+import { Task } from '../models';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkTask, deleteTask } from '../redux/taskSlice';
 import { AppState } from '../redux/store';

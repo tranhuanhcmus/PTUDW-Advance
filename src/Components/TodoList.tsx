@@ -4,15 +4,10 @@ import './styles.scss'
 import TodoForm from './TodoForm';
 import { useSelector } from 'react-redux';
 import { AppState } from '../redux/store';
+import { Task } from '../models';
 
 type Props = {
 
-}
-
-export type Task = {
-	title: string,
-	content: string,
-	check: boolean
 }
 
 const TodoList = (props: Props) => {

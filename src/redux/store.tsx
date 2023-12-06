@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import taskSlice from "./taskSlice";
-import { Task } from "../Components/TodoList";
+import { Task } from "../models";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import statusSlice, { AppStatus } from "./statusSlice";
