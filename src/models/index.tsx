@@ -3,7 +3,8 @@ export type User={
 	password:string,
 }
 export type Task = {
+	idTask?:string,
 	title: string,
 	content: string,
-	check: boolean
+	checked: boolean
 }

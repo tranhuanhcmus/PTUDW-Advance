@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Task } from "../models";
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask, editTask } from "../redux/taskSlice";
+import { TaskService } from "../services/taskService";
+import { setLoading } from "../redux/statusSlice";
 
 type Props = {
 	isShow: boolean,
@@ -20,23 +22,31 @@ const TodoForm = ({ isShow, switchModal, existData }: Props) => {
 	const [content, setContent] = useState<string>("")
 
 	const dispatch = useDispatch();
-
 	const reset = () => {
 		setContent("")
 		setTitle("")
 	}
 
-	const handleForm = (e: any) => {
+	const handleForm = async (e: any) => {
 		e.preventDefault()
-		const task = {
-			title, content, check: false
+		const task: Task = {
+			title, content, checked: false
 		}
 
 		if (!existData) {
+			dispatch(setLoading(true))
+			const res = await TaskService.addTask(task)
 			dispatch(addTask(task))
+			alert(res)
+			dispatch(setLoading(false))
 		}
-		else{
-			dispatch(editTask({oldTask:existData,updatedTask:task}))
+		else {
+			dispatch(setLoading(true))
+			const updateTask={ ...task, idTask: existData.idTask }
+			const res = await TaskService.editTask(updateTask)
+			dispatch(editTask({ oldTask: existData, updatedTask: updateTask }))
+			alert(res)
+			dispatch(setLoading(false))
 		}
 		reset()
 		switchModal()
@@ -56,9 +66,9 @@ const TodoForm = ({ isShow, switchModal, existData }: Props) => {
 	return (
 		<>
 			{isShow && (
-				<form onSubmit={handleForm} className="fixed inset-0">
-					<div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-					<div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+				<form onSubmit={handleForm} className="fixed inset-0 z-5">
+					<div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity " />
+					<div className="fixed inset-0  w-screen overflow-y-auto">
 						<div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
 							<div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
 								<div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">

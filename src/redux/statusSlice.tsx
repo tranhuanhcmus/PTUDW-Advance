@@ -21,7 +21,7 @@ const statusSlice = createSlice({
 		setLoading: (state, action: PayloadAction<boolean>) => {
 			state.loading = action.payload
 		},
-		setUser: (state, action: PayloadAction<User>) => {
+		setUser: (state, action: PayloadAction<User|undefined>) => {
 			state.user = action.payload
 		}
 

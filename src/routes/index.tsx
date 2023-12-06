@@ -1,18 +1,17 @@
-import {
-	createBrowserRouter
-} from "react-router-dom";
-import Todo from "../pages/Todo";
-import Loading from './../Components/Loading';
 import Login from "../pages/Login";
+import PrivateRoute from "./PrivateRoute";
+import TodoList from "../Components/TodoList";
+import { PATH } from "./constants";
 
-const router = createBrowserRouter([
+const routes = [
 	{
-		path: "/",
-		element: <Todo/>
+		path:PATH.LOGIN,
+		element:<Login/>
 	},
 	{
-		path: "/test",
-		element: <Login/>
+		path:PATH.HOME,
+		element:<PrivateRoute element={<TodoList/>}/>
 	},
-]);
-export default router
+	
+];
+export default routes

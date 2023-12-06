@@ -5,14 +5,13 @@ import './App.css'
 import { Provider } from 'react-redux'
 import { persistor, store } from './redux/store.tsx'
 import { PersistGate } from 'redux-persist/integration/react'
-import { RouterProvider } from 'react-router-dom'
-import router from './routes/index';
 import Loading from './Components/Loading.tsx'
+import App from './App.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <RouterProvider fallbackElement={<Loading/>} router={router}/>
+    <PersistGate loading={<Loading />} persistor={persistor}>
+      <App/>
     </PersistGate>
   </Provider>
 
