@@ -16,7 +16,6 @@ const Loading = (props: Props) => {
 				</div>
 			</div>
 		</>
-
 	)
 }
 
