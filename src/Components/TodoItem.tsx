@@ -1,22 +1,32 @@
 
 import { useState, useEffect } from 'react';
 import { Task } from './TodoList';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkTask, deleteTask } from '../redux/taskSlice';
+import { AppState } from '../redux/store';
 type TodoItemProps = {
 	data: Task;
-	key:number;
-	handleDelete: () => void;
-	handleEdit:() => void;
-	handleCheck:() => void;
+	id: number;
+	handleEdit: () => void;
 }
 
-const TodoItem = ({ data,key, handleDelete,handleEdit,handleCheck }: TodoItemProps) => {
+const TodoItem = ({ data, id, handleEdit }: TodoItemProps) => {
 	const [taskData, setTaskData] = useState<Task>()
+
+	const dispatch = useDispatch()
+
+	const handleCheck = () => {
+		taskData && dispatch(checkTask(taskData))
+	}
+	const handleDelete = () => {
+		taskData && dispatch(deleteTask(taskData))
+	}
 
 	useEffect(() => {
 		setTaskData(data)
 	}, [data])
 
-	
+
 	return (
 		<>
 			{

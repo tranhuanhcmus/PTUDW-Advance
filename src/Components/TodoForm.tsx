@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Task } from "./TodoList";
+import { useDispatch, useSelector } from 'react-redux';
+import { addTask, editTask } from "../redux/taskSlice";
 
 type Props = {
 	isShow: boolean,
 	handleClick: () => void,
-	handleSubmit: (title: string, content: string) => void,
 	existData?: Task | undefined
 }
 
@@ -13,10 +14,12 @@ export enum FormMode {
 	EDIT
 }
 
-const TodoForm = ({ isShow, handleClick, existData, handleSubmit }: Props) => {
+const TodoForm = ({ isShow, handleClick, existData }: Props) => {
 
 	const [title, setTitle] = useState<string>("")
 	const [content, setContent] = useState<string>("")
+
+	const dispatch = useDispatch();
 
 	const reset = () => {
 		setContent("")
@@ -25,9 +28,20 @@ const TodoForm = ({ isShow, handleClick, existData, handleSubmit }: Props) => {
 
 	const handleForm = (e: any) => {
 		e.preventDefault()
-		handleSubmit(title, content)
+		const task = {
+			title, content, check: false
+		}
+
+		if (!existData) {
+			dispatch(addTask(task))
+		}
+		else{
+			dispatch(editTask({oldTask:existData,updatedTask:task}))
+		}
 		reset()
+		handleClick()
 	}
+
 
 	useEffect(() => {
 		if (
