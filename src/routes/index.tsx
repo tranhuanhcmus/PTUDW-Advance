@@ -3,6 +3,7 @@ import {
 } from "react-router-dom";
 import Todo from "../pages/Todo";
 import Loading from './../Components/Loading';
+import Login from "../pages/Login";
 
 const router = createBrowserRouter([
 	{
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/test",
-		element: <Loading/>
+		element: <Login/>
 	},
 ]);
 export default router

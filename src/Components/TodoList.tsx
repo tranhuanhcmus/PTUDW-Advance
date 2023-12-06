@@ -48,7 +48,7 @@ const TodoList = (props: Props) => {
 			)) : <p>
 				No Task</p>}
 		</div>
-		<TodoForm isShow={showModal} handleClick={handleClick} existData={existData} />
+		<TodoForm isShow={showModal} switchModal={handleClick} existData={existData} />
 	</>
 
 }

@@ -7,11 +7,12 @@ import { persistor, store } from './redux/store.tsx'
 import { PersistGate } from 'redux-persist/integration/react'
 import { RouterProvider } from 'react-router-dom'
 import router from './routes/index';
+import Loading from './Components/Loading.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <RouterProvider router={router}/>
+      <RouterProvider fallbackElement={<Loading/>} router={router}/>
     </PersistGate>
   </Provider>
 

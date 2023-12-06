@@ -5,7 +5,7 @@ import { addTask, editTask } from "../redux/taskSlice";
 
 type Props = {
 	isShow: boolean,
-	handleClick: () => void,
+	switchModal: () => void,
 	existData?: Task | undefined
 }
 
@@ -14,7 +14,7 @@ export enum FormMode {
 	EDIT
 }
 
-const TodoForm = ({ isShow, handleClick, existData }: Props) => {
+const TodoForm = ({ isShow, switchModal, existData }: Props) => {
 
 	const [title, setTitle] = useState<string>("")
 	const [content, setContent] = useState<string>("")
@@ -39,7 +39,7 @@ const TodoForm = ({ isShow, handleClick, existData }: Props) => {
 			dispatch(editTask({oldTask:existData,updatedTask:task}))
 		}
 		reset()
-		handleClick()
+		switchModal()
 	}
 
 
@@ -88,7 +88,7 @@ const TodoForm = ({ isShow, handleClick, existData }: Props) => {
 								<div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-4">
 									<button type={"submit"}>Submit</button>
 									<button onClick={() => {
-										handleClick()
+										switchModal()
 										reset()
 									}}>Cancel</button>
 								</div>
