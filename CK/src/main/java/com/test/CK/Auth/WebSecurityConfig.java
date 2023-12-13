@@ -20,13 +20,14 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.disable())
+                .cors().and()
+                .csrf().disable()
                 .authorizeHttpRequests(authConfig -> authConfig
                         .requestMatchers("/api/v1/auth").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAfter(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
+                .addFilterAfter(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
@@ -34,7 +35,7 @@ public class WebSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-        configuration.setAllowedMethods(Arrays.asList("PUT", "DELETE", "POST","GET"));
+        configuration.setAllowedMethods(Arrays.asList("PUT", "DELETE", "POST", "GET"));
         configuration.setAllowCredentials(true);
 
         // You might need to set additional headers if required

@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class AuthenticationService {
     public static final String SECRET_KEY = "SecretKey";
-    public static final long MAX_TIME_DIFFERENCE_MINUTES = 60;
+    public static final long MAX_TIME_DIFFERENCE_MINUTES = 30;
 
     public static String getToken(String username,String password,Long timestamp){
         String token = Jwts.builder()
